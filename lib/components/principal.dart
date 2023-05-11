@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Tela1 extends StatelessWidget {
-  Tela1({super.key});
+class Principal extends StatelessWidget {
+  Principal({super.key});
 
   TextEditingController txtPergunta = TextEditingController();
 

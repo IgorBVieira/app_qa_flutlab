@@ -1,9 +1,10 @@
-import 'components/tela1.dart';
+import 'components/principal.dart';
 import 'package:flutter/material.dart';
 import 'components/tabbar.dart';
 import 'components/fab.dart';
 import 'components/askcard.dart';
 import 'components/likecard.dart';
+import 'components/askpage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,13 +18,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/likecard',
+        initialRoute: '/askpage',
         routes: {
-          '/tela1': (context) => Tela1(),
+          '/principal': (context) => Principal(),
           '/tabbar': (context) => TabBarApp(),
           '/fab': (context) => FAB(),
           '/askcard': (context) => AskCard(),
           '/likecard': (context) => LikeCard(),
+          '/askpage': (context) => AskPage(),
         });
   }
 }

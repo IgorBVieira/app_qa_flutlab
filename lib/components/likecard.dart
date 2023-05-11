@@ -9,41 +9,57 @@ class LikeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
-      home: const ListTileExample(),
+      home: ListTileExample(),
     );
   }
 }
 
-class ListTileExample extends StatelessWidget {
-  const ListTileExample({super.key});
+class ListTileExample extends StatefulWidget {
+  ListTileExample({super.key});
+
+  @override
+  State<ListTileExample> createState() => _ListTileExampleState();
+}
+
+class _ListTileExampleState extends State<ListTileExample> {
+  bool likeStatus = false;
+  int likeCount = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('ListTile Sample')),
       body: ListView(
-        children: const <Widget>[
-          ListTile(
-            leading: CircleAvatar(child: Text('A')),
-            title: Text('Headline'),
-            subtitle: Text('Supporting text'),
-            trailing: Icon(Icons.favorite_rounded),
-          ),
-          Divider(height: 0),
-          ListTile(
-            leading: CircleAvatar(child: Text('B')),
-            title: Text('Headline'),
-            subtitle: Text(
-                'Longer supporting text to demonstrate how the text wraps and how the leading and trailing widgets are centered vertically with the text.'),
-            trailing: Icon(Icons.favorite_rounded),
-          ),
+        children: <Widget>[
           Divider(height: 0),
           ListTile(
             leading: CircleAvatar(child: Text('C')),
-            title: Text('Headline'),
+            title: Text('NOME'),
             subtitle: Text(
                 "Longer supporting text to demonstrate how the text wraps and how setting 'ListTile.isThreeLine = true' aligns leading and trailing widgets to the top vertically with the text."),
-            trailing: Icon(Icons.favorite_rounded),
+            trailing: SizedBox(
+              width: 50,
+              child: Row(
+                children: [
+                  Text('$likeCount'),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          likeStatus = !likeStatus;
+                          if (likeStatus) {
+                            likeCount++;
+                          } else {
+                            likeCount--;
+                          }
+                        });
+                        print('$likeStatus');
+                      },
+                      icon: likeStatus
+                          ? const Icon(Icons.thumb_up)
+                          : const Icon(Icons.thumb_up_outlined)),
+                ],
+              ),
+            ),
             isThreeLine: true,
           ),
           Divider(height: 0),
