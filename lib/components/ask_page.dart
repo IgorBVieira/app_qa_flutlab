@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MyCustomForm extends StatelessWidget {
   const MyCustomForm({super.key});
 
@@ -15,7 +14,7 @@ class MyCustomForm extends StatelessWidget {
             maxLength: 250,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Enter a search term',
+              hintText: 'Digite sua pergunta',
             ),
           ),
         ),
@@ -26,7 +25,7 @@ class MyCustomForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
                 backgroundColor: Colors.brown.shade800,
-                child: const Text('AH'),
+                child: const Text('TS'),
               ),
             ),
             SizedBox(
@@ -34,7 +33,7 @@ class MyCustomForm extends StatelessWidget {
               child: TextFormField(
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Enter your username',
+                  labelText: 'Digite seu nome',
                 ),
               ),
             ),
@@ -42,7 +41,7 @@ class MyCustomForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text('Submit'),
+                child: const Text('Enviar'),
               ),
             ),
           ],

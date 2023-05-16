@@ -33,8 +33,8 @@ class _CustomListViewState extends State<CustomListView> {
               leading: CircleAvatar(
                 child: Text('T'),
               ),
-              title: Text('Question $index,'),
-              subtitle: Text('Answer $index'),
+              title: Text('Name $index,'),
+              subtitle: Text('Question $index'),
               trailing: SizedBox(
                 width: 50,
                 child: Row(
