@@ -1,10 +1,6 @@
-import 'views/main_app.dart';
+import 'main_app.dart';
 import 'package:flutter/material.dart';
-import 'views/tabbar.dart';
-import 'components/fab.dart';
-import 'components/askcard.dart';
-import 'components/likecard.dart';
-import 'views/ask_page.dart';
+// import 'ask_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +16,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/MainApp',
         routes: {
-          '/MainApp': (context) => MainApp(),
-          '/tabbar': (context) => TabBarExample(),
-          '/fab': (context) => FAB(),
-          '/askcard': (context) => AskCard(),
-          '/likecard': (context) => LikeCard(),
-          '/askpage': (context) => AskPage(),
+          '/MainApp': (context) => const MainApp(),
+          // '/AskPage': (context) => const AskPage(),
         });
   }
 }

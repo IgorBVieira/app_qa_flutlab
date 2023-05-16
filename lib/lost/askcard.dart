@@ -5,32 +5,10 @@ class AskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          colorSchemeSeed: const Color(0xff6750a4), useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Card Examples')),
-        body: Column(
-          children: <Widget>[
-            Spacer(),
-            ElevatedCardExample(),
-            Spacer(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ElevatedCardExample extends StatelessWidget {
-  const ElevatedCardExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
         onTap: () {
-          print("funcionei");
+          Navigator.of(context).pushNamed('/AskPage');
         },
         child: Card(
           child: SizedBox(
