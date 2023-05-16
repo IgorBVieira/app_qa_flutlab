@@ -66,3 +66,6 @@ class _CustomListViewState extends State<CustomListView> {
     );
   }
 }
+
+
+// TODO: listview precisa conversar com o banco para recuperar dados
