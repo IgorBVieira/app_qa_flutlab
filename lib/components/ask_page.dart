@@ -39,11 +39,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
           nome: nome,
           qtdLikes: 0,
         );
+        await adicionarPergunta(novaPergunta);
+      } else {
+        print('deu ruim');
       }
-      Pergunta novaPergunta =
-          Pergunta(id: '', pergunta: pergunta, nome: nome, qtdLikes: 0);
-      await adicionarPergunta(novaPergunta);
-    }
+    } 
   }
 
   @override

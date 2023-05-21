@@ -31,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Ocorreu um erro inesperado.'),

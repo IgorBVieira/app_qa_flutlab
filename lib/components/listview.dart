@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
 
 class CustomListView extends StatefulWidget {
   const CustomListView({super.key});
@@ -9,14 +11,23 @@ class CustomListView extends StatefulWidget {
 }
 
 class _CustomListViewState extends State<CustomListView> {
-  bool likeStatus = false;
-  int likeCount = 0;
+  final Stream<QuerySnapshot> _perguntasStream = FirebaseFirestore.instance
+      .collection('perguntas')
+      .snapshots();
 
-  final Stream<QuerySnapshot> _perguntasStream =
-      FirebaseFirestore.instance.collection('perguntas').snapshots();
+  Map<String, Color> _avatarColors = {};
+
+  Color getAvatarColor(String id) {
+    if (!_avatarColors.containsKey(id)) {
+      _avatarColors[id] = getRandomColor();
+    }
+    return _avatarColors[id]!;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
           stream: _perguntasStream,
@@ -35,6 +46,11 @@ class _CustomListViewState extends State<CustomListView> {
                 (DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
+
+                  bool likeStatus = data['likedBy'] != null &&
+                      (data['likedBy'] as List).contains(currentUser!.uid);
+                  int likeCount = data['qtdLikes'] ?? 0;
+
                   return Card(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
@@ -46,8 +62,9 @@ class _CustomListViewState extends State<CustomListView> {
                     ),
                     color: Colors.white,
                     child: ListTile(
-                      leading: const CircleAvatar(
-                        child: Text('T'),
+                      leading: CircleAvatar(
+                        backgroundColor: getAvatarColor(document.id),
+                        child: Text(data['nome'][0]),
                       ),
                       title: Text(data['nome']),
                       subtitle: Text(data['pergunta']),
@@ -55,23 +72,38 @@ class _CustomListViewState extends State<CustomListView> {
                         width: 50,
                         child: Row(
                           children: [
-                            Text('$likeCount'),
+                            Text('$likeCount'), 
                             IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    likeStatus = !likeStatus;
-                                    if (likeStatus) {
-                                      likeCount++;
-                                    } else {
-                                      likeCount--;
-                                    }
+                              onPressed: () async {
+                                final docRef = FirebaseFirestore.instance
+                                    .collection('perguntas')
+                                    .doc(document.id);
+
+                                final likedBy =
+                                    List<String>.from(data['likedBy'] ?? []);
+                                final newLikeStatus = !likeStatus;
+                                setState(() {
+                                  likeStatus = newLikeStatus;
+                                });
+
+                                if (newLikeStatus) {
+                                  likedBy.add(currentUser!.uid);
+                                  await docRef.update({
+                                    'qtdLikes': FieldValue.increment(1),
+                                    'likedBy': likedBy,
                                   });
-                                  // ignore: avoid_print
-                                  print('$likeStatus');
-                                },
-                                icon: likeStatus
-                                    ? const Icon(Icons.thumb_up)
-                                    : const Icon(Icons.thumb_up_outlined)),
+                                } else {
+                                  likedBy.remove(currentUser!.uid);
+                                  await docRef.update({
+                                    'qtdLikes': FieldValue.increment(-1),
+                                    'likedBy': likedBy,
+                                  });
+                                }
+                              },
+                              icon: likeStatus
+                                  ? const Icon(Icons.thumb_up)
+                                  : const Icon(Icons.thumb_up_outlined),
+                            ),
                           ],
                         ),
                       ),
@@ -86,14 +118,16 @@ class _CustomListViewState extends State<CustomListView> {
   }
 }
 
+Color getRandomColor() {
+  final random = Random();
+  return Color.fromARGB(
+    255,
+    random.nextInt(256),
+    random.nextInt(256),
+    random.nextInt(256),
+  );
+}
 
 
-
-// TODO: Fazer o controle de estado do like individualmente
-
-// TODO: Fazer o controle dos numeros de like funcionar
-
-// TODO: Fazer o CircleAvatar gerar um avatar automaticamente
-
-// TODO: Separar as perguntas por usuario logado
-
+// TODO: Os dados precisam ser mostrados em ordem de quem tem mais likes 
+// ! Quando o card é criado ao clicar no like ele pode assumir o valor -1, isso não pode ocorrer
