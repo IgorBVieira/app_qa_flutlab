@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class CustomListView extends StatefulWidget {
   const CustomListView({super.key});
@@ -24,10 +23,10 @@ class _CustomListViewState extends State<CustomListView> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return const Text('Something went wrong');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
 
             return Container(
@@ -88,4 +87,13 @@ class _CustomListViewState extends State<CustomListView> {
 }
 
 
-// TODO: listview precisa conversar com o banco para recuperar dados
+
+
+// TODO: Fazer o controle de estado do like individualmente
+
+// TODO: Fazer o controle dos numeros de like funcionar
+
+// TODO: Fazer o CircleAvatar gerar um avatar automaticamente
+
+// TODO: Separar as perguntas por usuario logado
+

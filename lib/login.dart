@@ -23,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
           content: Text('Login realizado com sucesso!'),
         ),
       );
+      Navigator.of(context).pushNamed('/MainApp');
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -58,10 +59,22 @@ class _LoginPageState extends State<LoginPage> {
               decoration: const InputDecoration(labelText: 'Senha'),
               obscureText: true,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _loginUser,
-              child: const Text('Login'),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: _loginUser,
+                    child: const Text('Login'),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/Register');
+                      },
+                      child: const Text('Registrar')),
+                ],
+              ),
             ),
           ],
         ),

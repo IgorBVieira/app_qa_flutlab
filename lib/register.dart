@@ -11,20 +11,24 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   Future<void> _registerUser() async {
     try {
       if (_passwordController.text == _confirmPasswordController.text) {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-                email: _emailController.text, password: _passwordController.text);
+                email: _emailController.text,
+                password: _passwordController.text);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Usuário registrado com sucesso!'),
           ),
         );
+
+        Navigator.of(context).pushNamed('/Login');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -83,3 +87,5 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
+// TODO: Parou de funcionar, ao colocar o navigator.of

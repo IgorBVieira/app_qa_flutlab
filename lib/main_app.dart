@@ -1,7 +1,5 @@
 import 'package:appqa/components/ask_page.dart';
 import 'package:flutter/material.dart';
-// import 'components/askcard.dart';
-// import 'components/fab.dart';
 import 'components/listview.dart';
 
 class MainApp extends StatelessWidget {
@@ -15,7 +13,7 @@ class MainApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Q&A'),
         ),
-        body: Column(
+        body: const Column(
           children: [
             MyCustomForm(),
             CustomListView(),
