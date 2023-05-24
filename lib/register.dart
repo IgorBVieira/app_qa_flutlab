@@ -88,4 +88,3 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-// TODO: Parou de funcionar, ao colocar o navigator.of

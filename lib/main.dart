@@ -40,8 +40,4 @@ class MyApp extends StatelessWidget {
 
 
 
-// Cada usuário poderá "curtir" apenas 1 vez cada pergunta.
 
-
-
-// Fazer o usuario anonimo: https://shorturl.at/pFW08

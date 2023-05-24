@@ -67,10 +67,22 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: _loginUser,
                     child: const Text('Login'),
                   ),
-                  // ElevatedButton(
-                  //   onPressed: _loginUserAnonymous,
-                  //   child: const Text('Logar como Anomimo'),
-                  // ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        UserCredential userCredential =
+                            await FirebaseAuth.instance.signInAnonymously();
+                        Navigator.of(context).pushNamed('/MainApp');
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Erro ao realizar login: $e'),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text('Logar como Anônimo'),
+                  ),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed('/Register');
@@ -85,5 +97,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-//auth.signInAnonymously();

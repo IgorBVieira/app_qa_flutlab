@@ -17,7 +17,7 @@ class _CustomListViewState extends State<CustomListView> {
       .orderBy('data')
       .snapshots();
 
-  Map<String, Color> _avatarColors = {};
+  final Map<String, Color> _avatarColors = {};
 
   Color getAvatarColor(String id) {
     if (!_avatarColors.containsKey(id)) {
@@ -72,39 +72,36 @@ class _CustomListViewState extends State<CustomListView> {
                       title: Text(data['nome']),
                       subtitle: Text(data['pergunta']),
                       trailing: SizedBox(
-                        width: 50,
+                        width: 65,
                         child: Row(
                           children: [
                             Text('$likeCount'),
-                            IconButton(
-                              onPressed: () async {
-                                final docRef = FirebaseFirestore.instance
-                                    .collection('perguntas')
-                                    .doc(document.id);
+                            Expanded(
+                              child: IconButton(
+                                onPressed: () async {
+                                  final docRef = FirebaseFirestore.instance
+                                      .collection('perguntas')
+                                      .doc(document.id);
 
-                                final likedBy =
-                                    List<String>.from(data['likedBy'] ?? []);
-                                final newLikeStatus = !likeStatus;
-                                setState(() {
-                                  likeStatus = newLikeStatus;
-                                });
-
-                                if (newLikeStatus) {
-                                  likedBy.add(currentUser!.uid);
-                                  await docRef.update({
-                                    'qtdLikes': FieldValue.increment(1),
-                                    'likedBy': likedBy,
+                                  final likedBy =
+                                      List<String>.from(data['likedBy'] ?? []);
+                                  final newLikeStatus = !likeStatus;
+                                  setState(() {
+                                    likeStatus = newLikeStatus;
                                   });
-                                }
-                                likedBy.remove(currentUser!.uid);
-                                await docRef.update({
-                                  'qtdLikes': FieldValue.increment(-1),
-                                  'likedBy': likedBy,
-                                });
-                              },
-                              icon: likeStatus
-                                  ? const Icon(Icons.thumb_up)
-                                  : const Icon(Icons.thumb_up_outlined),
+
+                                  if (newLikeStatus) {
+                                    likedBy.add(currentUser!.uid);
+                                    await docRef.update({
+                                      'qtdLikes': FieldValue.increment(1),
+                                      'likedBy': likedBy,
+                                    });
+                                  }
+                                },
+                                icon: likeStatus
+                                    ? const Icon(Icons.thumb_up)
+                                    : const Icon(Icons.thumb_up_outlined),
+                              ),
                             ),
                           ],
                         ),
@@ -131,5 +128,4 @@ Color getRandomColor() {
 }
 
 
-// TODO: Os dados precisam ser mostrados em ordem de quem tem mais likes 
-
+// TODO: Usuarios Anonimos não conseguem dar like, corrigir
